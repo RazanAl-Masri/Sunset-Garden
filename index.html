@@ -26,6 +26,10 @@
       color:var(--ink);
       line-height:1.65;
     }
+    /* Ensure consistent sizing & remove default figure/margins that can break width calc */
+    #sunset-landing *, #sunset-landing *::before, #sunset-landing *::after { box-sizing: border-box; }
+    #sunset-landing figure { margin: 0; }
+
     #sunset-landing a{color:inherit;text-decoration:none}
     #sunset-landing .wrap{max-width:var(--grid);margin-inline:auto;padding:16px}
 
@@ -38,10 +42,27 @@
     #sunset-landing .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent}
 
     /* Slider */
-    #sunset-landing .slider{position:relative;overflow:hidden;border-radius:16px;box-shadow:var(--shadow);isolation:isolate}
-    #sunset-landing .slides{display:flex;transition:transform .6s ease;will-change:transform}
-    #sunset-landing .slide{min-width:100%;height:55vh;max-height:620px;position:relative;background:#000}
-    #sunset-landing .slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.05) brightness(.98)}
+    #sunset-landing .slider{
+      position:relative;overflow:hidden;border-radius:16px;box-shadow:var(--shadow);isolation:isolate;
+      width:100%;
+      contain: paint; /* prevents layout side-effects */
+    }
+    #sunset-landing .slides{
+      display:flex; gap:0; /* no gaps between slides */
+      transition:transform .6s cubic-bezier(.22,.61,.36,1);
+      will-change:transform;
+      width:100%;
+    }
+    #sunset-landing .slide{
+      flex:0 0 100%; /* each slide = full viewport width of the slider */
+      height:clamp(320px, 55vh, 620px);
+      position:relative;background:#000;
+    }
+    #sunset-landing .slide img{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      filter:saturate(1.05) contrast(1.05) brightness(.98);
+      display:block; /* avoids inline image gaps affecting layout */
+    }
     #sunset-landing .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.6) 65%,rgba(0,0,0,.85))}
     #sunset-landing .slide-caption{position:absolute;left:16px;right:16px;bottom:16px;display:grid;gap:8px;color:#fff;pointer-events:none}
     #sunset-landing .slide-caption .btn{pointer-events:auto}
@@ -156,7 +177,7 @@
       <section id="facts" class="grid-2">
         <div class="card">
           <h2 class="section-title">Guaranteed Rental Program</h2>
-        <p>Receive a fixed monthly income backed by the developer’s rental program for a full decade. Perfect for investors who want predictable returns without management hassle.</p>
+          <p>Receive a fixed monthly income backed by the developer’s rental program for a full decade. Perfect for investors who want predictable returns without management hassle.</p>
           <a class="btn primary" target="_blank" href="https://wa.me/905358699178?text=Send%20me%20the%20rental%20guarantee%20contract">Get Legal & Terms via WhatsApp</a>
         </div>
         <div class="card" id="why">
@@ -217,56 +238,67 @@
       </section>
     </main>
 
-    <!-- Optional: Google Reviews shortcode placeholder (ignored on static GH pages) -->
-    <div class="wrap">[googlereviewspro id="1"]</div>
-
-    <!-- Slider Script -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function(){
-        document.querySelectorAll('#sunset-landing .js-sunset-slider').forEach(function(slider){
-          var track = slider.querySelector('.js-track');
-          var prev  = slider.querySelector('.js-prev');
-          var next  = slider.querySelector('.js-next');
-          var dots  = slider.querySelector('.js-dots');
-          if(!track || !dots || !prev || !next) return;
-
-          var total = track.children.length;
-          var index = 0;
-          var interval = parseInt(slider.getAttribute('data-autoplay') || '6500', 10);
-          var timer;
-
-          function update(){
-            track.style.transform = 'translateX(-' + (index*100) + '%)';
-            Array.prototype.forEach.call(dots.children, function(d, i){
-              d.classList.toggle('active', i === index);
-            });
-          }
-
-          for(var i=0;i<total;i++){
-            var dot = document.createElement('button');
-            dot.type = 'button';
-            dot.className = 'dot';
-            (function(i){ dot.addEventListener('click', function(){ index = i; update(); }); })(i);
-            dots.appendChild(dot);
-          }
-          update();
-
-          prev.addEventListener('click', function(){ index = (index - 1 + total) % total; update(); });
-          next.addEventListener('click', function(){ index = (index + 1) % total; update(); });
-
-          function start(){ stop(); timer = setInterval(function(){ index = (index + 1) % total; update(); }, interval); }
-          function stop(){ if(timer) clearInterval(timer); }
-          start();
-
-          slider.addEventListener('mouseenter', stop);
-          slider.addEventListener('mouseleave', start);
-          document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
-
-          track.style.display = 'flex';
-          Array.prototype.forEach.call(track.children, function(el){ el.style.minWidth = '100%'; });
-        });
-      });
-    </script>
+    <!-- (Removed) [googlereviewspro id="1"] -->
   </div>
+
+  <!-- Slider Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('#sunset-landing .js-sunset-slider').forEach(function(slider){
+        var track = slider.querySelector('.js-track');
+        var prev  = slider.querySelector('.js-prev');
+        var next  = slider.querySelector('.js-next');
+        var dots  = slider.querySelector('.js-dots');
+        if(!track || !dots || !prev || !next) return;
+
+        var total = track.children.length;
+        var index = 0;
+        var interval = parseInt(slider.getAttribute('data-autoplay') || '6500', 10);
+        var timer;
+
+        function go(i){
+          index = (i + total) % total;
+          // translate3d for smoother GPU animation
+          track.style.transform = 'translate3d(-' + (index * 100) + '%, 0, 0)';
+          Array.prototype.forEach.call(dots.children, function(d, k){
+            d.classList.toggle('active', k === index);
+          });
+        }
+
+        // Build dots
+        for(var i=0;i<total;i++){
+          var dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'dot';
+          (function(i){ dot.addEventListener('click', function(){ go(i); }); })(i);
+          dots.appendChild(dot);
+        }
+        go(0);
+
+        // Arrows
+        prev.addEventListener('click', function(){ go(index - 1); });
+        next.addEventListener('click', function(){ go(index + 1); });
+
+        // Autoplay with pause on hover/visibility
+        function start(){ stop(); timer = setInterval(function(){ go(index + 1); }, interval); }
+        function stop(){ if(timer) clearInterval(timer); }
+        start();
+
+        slider.addEventListener('mouseenter', stop);
+        slider.addEventListener('mouseleave', start);
+        document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+
+        // Defensive: ensure proper layout if global CSS interferes
+        track.style.display = 'flex';
+        Array.prototype.forEach.call(track.children, function(el){
+          el.style.minWidth = '100%';
+          el.style.flex = '0 0 100%';
+        });
+
+        // Keep slide aligned on viewport resize (avoids “half slide”)
+        window.addEventListener('resize', function(){ go(index); });
+      });
+    });
+  </script>
 </body>
 </html>
