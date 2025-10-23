@@ -221,7 +221,10 @@
   <!-- Slider Script -->
   <script>
     document.addEventListener('DOMContentLoaded', function(){
+      // Footer year
       var y = document.getElementById('y'); if(y) y.textContent = new Date().getFullYear();
+
+      // Init all sliders under #sunset-landing
       document.querySelectorAll('#sunset-landing .js-sunset-slider').forEach(function(slider){
         var track = slider.querySelector('.js-track');
         var prev  = slider.querySelector('.js-prev');
@@ -241,6 +244,7 @@
           });
         }
 
+        // Build dots
         for(var i=0;i<total;i++){
           var dot = document.createElement('button');
           dot.type = 'button';
@@ -250,9 +254,11 @@
         }
         update();
 
+        // Arrows
         prev.addEventListener('click', function(){ index = (index - 1 + total) % total; update(); });
         next.addEventListener('click', function(){ index = (index + 1) % total; update(); });
 
+        // Autoplay with pause on hover/visibility
         function start(){ stop(); timer = setInterval(function(){ index = (index + 1) % total; update(); }, interval); }
         function stop(){ if(timer) clearInterval(timer); }
         start();
@@ -261,6 +267,7 @@
         slider.addEventListener('mouseleave', start);
         document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
 
+        // Defensive: if some global CSS breaks flex, we force it
         track.style.display = 'flex';
         Array.prototype.forEach.call(track.children, function(el){ el.style.minWidth = '100%'; });
       });
