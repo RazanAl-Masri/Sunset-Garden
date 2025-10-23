@@ -1,277 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sunset Garden – Antalya | 10-Year Rental Guarantee</title>
-  <style>
-    /* ===============================
-       SCOPED, MOBILE-FRIENDLY STYLES
-       =============================== */
-    #sunset-landing {
-      --brand:#f15a29;
-      --brand-2:#ff8a50;
-      --ink:#0f172a;
-      --ink-2:#334155;
-      --accent:#0ea5e9;
-      --ok:#16a34a;
-      --bg:#ffffff;
-      --card:#ffffff;
-      --radius:20px;
-      --shadow:0 12px 30px rgba(15, 23, 42, .08);
-      --grid:min(1180px,92vw);
-      --gap:20px;
-      font-family:Arial, Helvetica, sans-serif;
-      background:var(--bg);
-      color:var(--ink);
-      line-height:1.65;
-    }
-    #sunset-landing a{color:inherit;text-decoration:none}
-    #sunset-landing .wrap{max-width:var(--grid);margin-inline:auto;padding:16px}
-
-    /* Header */
-    #sunset-landing header{position:sticky;top:0;z-index:30;background:#fff}
-    #sunset-landing .nav{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-bottom:1px solid #e5e7eb;padding:10px}
-    #sunset-landing .brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:16px}
-    #sunset-landing .badge{background:linear-gradient(135deg,var(--brand),var(--brand-2));padding:6px 10px;border-radius:999px;font-size:11px;color:#fff;white-space:nowrap}
-    #sunset-landing .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;border-radius:12px;border:1px solid #e5e7eb;background:#fff;color:var(--ink);font-weight:700;font-size:14px}
-    #sunset-landing .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent}
-
-    /* Slider */
-    #sunset-landing .slider{position:relative;overflow:hidden;border-radius:16px;box-shadow:var(--shadow);isolation:isolate}
-    #sunset-landing .slides{display:flex;transition:transform .6s ease;will-change:transform}
-    #sunset-landing .slide{min-width:100%;height:55vh;max-height:620px;position:relative;background:#000}
-    #sunset-landing .slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.05) brightness(.98)}
-    #sunset-landing .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.6) 65%,rgba(0,0,0,.85))}
-    #sunset-landing .slide-caption{position:absolute;left:16px;right:16px;bottom:16px;display:grid;gap:8px;color:#fff;pointer-events:none}
-    #sunset-landing .slide-caption .btn{pointer-events:auto}
-    #sunset-landing .kicker{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#e2e8f0}
-    #sunset-landing h1{margin:0;font-weight:900;font-size:clamp(22px,5vw,40px);line-height:1.1;color:#fff}
-    #sunset-landing h1 .num{background:linear-gradient(135deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-    #sunset-landing .dots{position:absolute;display:flex;gap:6px;left:50%;transform:translateX(-50%);bottom:10px;z-index:5}
-    #sunset-landing .dot{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.55);border:1px solid #fff;cursor:pointer}
-    #sunset-landing .dot.active{background:linear-gradient(135deg,var(--brand),var(--brand-2))}
-    #sunset-landing .arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;background:#ffffffe6;border:1px solid #e2e8f0;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;cursor:pointer;color:#0f172a;font-size:16px}
-    #sunset-landing .arrow.left{left:8px}
-    #sunset-landing .arrow.right{right:8px}
-
-    /* Highlights */
-    #sunset-landing .highlights{margin-top:12px;display:grid;gap:12px}
-    @media(min-width:700px){#sunset-landing .highlights{grid-template-columns:repeat(3,1fr)}}
-    #sunset-landing .pill{padding:14px;border:1px solid #eef2f7;background:#ffffff;border-radius:14px;display:grid;gap:4px;box-shadow:var(--shadow);text-align:center}
-    #sunset-landing .pill strong{color:var(--ink);font-size:14px}
-    #sunset-landing .pill .big{font-weight:900;font-size:22px}
-    #sunset-landing .pill .e{color:#0ea5e9}
-    #sunset-landing .pill .usd{color:#0ea5e9}
-    #sunset-landing .pill .yrs{color:#ef4444}
-
-    /* Sections */
-    #sunset-landing section{padding:40px 0}
-    #sunset-landing .section-title{font-weight:900;font-size:clamp(20px,4vw,28px);margin:0 0 16px;color:var(--ink)}
-    #sunset-landing .grid-2{display:grid;gap:20px}
-    @media(min-width:900px){#sunset-landing .grid-2{grid-template-columns:1fr 1fr}}
-    #sunset-landing .card{background:var(--card);border:1px solid #eaeef4;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
-    #sunset-landing .list{display:grid;gap:8px;padding:0;margin:0}
-    #sunset-landing .list li{list-style:none;position:relative;padding-left:18px;font-size:14px}
-    #sunset-landing .list li::before{content:"";width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));position:absolute;left:0;top:.6em}
-
-    /* Map */
-    #sunset-landing .map{border:0;width:100%;height:260px;border-radius:14px;box-shadow:var(--shadow)}
-
-    /* Footer */
-    #sunset-landing footer{padding:20px 0;border-top:1px solid #eaeef4;color:#64748b;font-size:13px;text-align:center}
-
-    @media (prefers-reduced-motion: reduce){
-      #sunset-landing .slides{transition:none}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sunset Garden – Antalya | 10-Year Rental Guarantee</title>
+<style>
+/* EMAIL-SAFE INLINEABLE CSS ONLY */
+body{margin:0;padding:0;background:#ffffff}
+table{border-collapse:collapse}
+img{border:0;display:block;line-height:0;font-size:0}
+a{color:#0f172a;text-decoration:none}
+.wrapper{width:100%;background:#ffffff}
+.container{width:100%;max-width:640px;margin:0 auto}
+.h1{font:700 24px Arial,Helvetica,sans-serif;color:#0f172a;line-height:1.25;margin:0}
+.p{font:400 15px Arial,Helvetica,sans-serif;color:#334155;line-height:1.6;margin:0}
+.btn{
+  display:inline-block;background:#f15a29;color:#ffffff;
+  font:700 15px Arial,Helvetica,sans-serif;line-height:1;
+  padding:14px 18px;border-radius:8px
+}
+.badge{display:inline-block;background:#f15a29;color:#fff;font:700 11px Arial;padding:6px 10px;border-radius:999px}
+.kicker{font:700 11px Arial,Helvetica,sans-serif;color:#64748b;letter-spacing:.5px;text-transform:uppercase}
+.pill{border:1px solid #eaeef4;border-radius:12px;padding:12px;text-align:center}
+.pill-title{font:700 12px Arial;color:#0f172a;margin:0}
+.pill-val{font:800 18px Arial;color:#0ea5e9;margin:4px 0 0}
+.hr{height:1px;background:#eaeef4;line-height:1;font-size:0}
+</style>
 </head>
 <body>
-  <div id="sunset-landing">
+  <center class="wrapper">
+    <table role="presentation" width="100%">
+      <tr><td align="center">
+        <table role="presentation" class="container">
+          <!-- Header -->
+          <tr><td style="padding:16px 16px 8px 16px" align="left">
+            <span class="kicker">AKSU • GÜZELYURT • ANTALYA</span><br>
+            <span class="badge">Delivery 06/2027</span>
+          </td></tr>
 
-    <!-- HEADER -->
-    <header>
-      <div class="wrap nav">
-        <div class="brand">
-          <span>Sunset Garden • Antalya</span>
-          <span class="badge">Delivery 06/2027</span>
-        </div>
-        <div class="btn-row">
-          <a class="btn" href="#why">Why Invest</a>
-          <a class="btn" href="#location">Location</a>
-          <a class="btn" href="#amenities">Amenities</a>
-          <a class="btn primary" target="_blank" href="https://wa.me/905358699178?text=I'm%20interested%20in%20Sunset%20Garden%20(10-year%20rental%20guarantee).%20Please%20send%20prices%20and%20availability.">Get an Offer</a>
-        </div>
-      </div>
-    </header>
+          <!-- Hero (STATIC image; no slider) -->
+          <tr><td>
+            <!-- Replace with your absolute image URL (Mailchimp Content Studio URL recommended) -->
+            <img src="https://example.com/path/to/hero.jpg" width="640" alt="Sunset Garden Antalya – Rental Guarantee" style="width:100%;height:auto;">
+          </td></tr>
 
-    <!-- MAIN -->
-    <main class="wrap">
-      <!-- HERO SLIDER -->
-      <section aria-label="Project Gallery">
-        <div class="slider js-sunset-slider" data-autoplay="6500">
-          <div class="slides js-track">
-            <figure class="slide">
-              <img class="area-image" src="1.jpg" alt="Silifke Nature & Coast">
-            </figure>
-            <figure class="slide">
-              <img class="area-image" src="11.jpg" alt="Sunset Garden View 2">
-            </figure>
-            <figure class="slide">
-              <img class="area-image" src="2.jpg" alt="Sunset Garden View 3">
-            </figure>
-            <figure class="slide">
-              <img class="area-image" src="4.jpg" alt="Sunset Garden View 4">
-            </figure>
-            <figure class="slide">
-              <img class="area-image" src="5.jpg" alt="Sunset Garden View 5">
-            </figure>
-          </div>
+          <!-- Title -->
+          <tr><td style="padding:16px" align="left">
+            <h1 class="h1">10-Year Rental Income Guarantee — $700/month</h1>
+          </td></tr>
 
-          <!-- Controls (no IDs) -->
-          <button class="arrow left js-prev" aria-label="Previous" type="button">◀</button>
-          <button class="arrow right js-next" aria-label="Next" type="button">▶</button>
-          <div class="dots js-dots" aria-hidden="true"></div>
+          <!-- CTA -->
+          <tr><td style="padding:0 16px 16px 16px" align="left">
+            <a class="btn" href="https://wa.me/905358699178?text=I'm%20interested%20in%20Sunset%20Garden%20(10-year%20rental%20guarantee).%20Please%20send%20prices%20and%20availability." target="_blank">Get an Offer on WhatsApp</a>
+          </td></tr>
 
-          <!-- Caption -->
-          <div class="slide-caption">
-            <span class="kicker">AKSU • GÜZELYURT • ANTALYA</span>
-            <h1>10-Year Rental Income Guarantee — <span class="num">$700/month</span></h1>
-            <div class="btn-row">
-              <a class="btn primary" target="_blank" href="https://wa.me/905358699178?text=Reserve%20a%20unit%20at%20Sunset%20Garden">Reserve on WhatsApp</a>
-              <a class="btn" href="#facts">Project Facts</a>
-            </div>
-          </div>
-        </div>
+          <!-- Pills -->
+          <tr><td style="padding:8px 16px 16px 16px">
+            <table role="presentation" width="100%">
+              <tr>
+                <td class="pill" width="33.33%" style="width:33.33%;">
+                  <p class="pill-title">Starting Price</p>
+                  <p class="pill-val">€80,000</p>
+                </td>
+                <td width="10"></td>
+                <td class="pill" width="33.33%" style="width:33.33%;">
+                  <p class="pill-title">Guaranteed Income</p>
+                  <p class="pill-val">$700/mo × 10 yrs</p>
+                </td>
+                <td width="10"></td>
+                <td class="pill" width="33.33%" style="width:33.33%;">
+                  <p class="pill-title">Projected ROI</p>
+                  <p class="pill-val" style="color:#16a34a">~9.0% / yr</p>
+                </td>
+              </tr>
+            </table>
+          </td></tr>
 
-        <!-- Highlights -->
-        <div class="highlights" role="list">
-          <div class="pill" role="listitem"><strong>Starting Price</strong><span class="big e">€80,000</span></div>
-          <div class="pill" role="listitem"><strong>Guaranteed Income</strong><span class="big"><span class="usd">$700</span>/month <span class="yrs">× 10 yrs</span></span></div>
-          <div class="pill" role="listitem"><strong>Projected ROI</strong><span class="big" style="color:var(--ok)">~9.0% / year</span></div>
-        </div>
-      </section>
+          <tr><td class="hr"></td></tr>
 
-      <!-- FACTS + WHY INVEST -->
-      <section id="facts" class="grid-2">
-        <div class="card">
-          <h2 class="section-title">Guaranteed Rental Program</h2>
-          <p>Receive a fixed monthly income backed by the developer’s rental program for a full decade. Perfect for investors who want predictable returns without management hassle.</p>
-          <a class="btn primary" target="_blank" href="https://wa.me/905358699178?text=Send%20me%20the%20rental%20guarantee%20contract">Get Legal & Terms via WhatsApp</a>
-        </div>
-        <div class="card" id="why">
-          <h2 class="section-title">Why Invest in Sunset Garden?</h2>
-          <ul class="list">
-            <li>Affordable entry price starting at <strong>€80,000</strong>.</li>
-            <li>Secure <strong>10-year</strong> rental guarantee: <strong>$700/month</strong>.</li>
-            <li>Expected ROI of <strong>~9.0% annually</strong>.</li>
-            <li>Fast-growing location: Antalya <strong>Aksu (Güzelyurt)</strong>.</li>
-            <li>Delivery <strong>June 2027</strong> — pre-completion pricing.</li>
-            <li>Amenities that rent well: <strong>hamam, fitness, pool, sauna</strong>.</li>
-            <li>Professional management & strong international demand.</li>
-          </ul>
-        </div>
-      </section>
+          <!-- Why Invest -->
+          <tr><td style="padding:16px" align="left">
+            <p class="p"><strong>Why Invest in Sunset Garden?</strong></p>
+            <p class="p">• Entry price from €80,000<br>
+            • 10-year rental guarantee: $700/month<br>
+            • Expected ~9.0% annual ROI (gross)<br>
+            • Antalya Aksu (Güzelyurt) growth corridor<br>
+            • Delivery June 2027 — pre-completion pricing<br>
+            • Hamam, fitness, pool, sauna; strong rental appeal</p>
+          </td></tr>
 
-      <!-- AMENITIES -->
-      <section id="amenities" class="grid-2">
-        <div class="card">
-          <h2 class="section-title">Social Amenities</h2>
-          <ul class="list">
-            <li>Hamam</li>
-            <li>Fitness</li>
-            <li>Swimming pool</li>
-            <li>Sauna</li>
-            <li>Indoor car park</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h2 class="section-title">Interior Features</h2>
-          <ul class="list">
-            <li>Laminated parquet floors</li>
-            <li>Ceramic flooring in wet zones</li>
-            <li>Modern bathroom cabinets & fixtures</li>
-            <li>Stylish kitchen with cabinets & countertop</li>
-            <li>All interior doors installed</li>
-            <li>Spot lighting</li>
-            <li>PVC windows</li>
-            <li>Built-in hob, oven & hood</li>
-            <li>MDF + lacquered cloakroom at entrance</li>
-          </ul>
-        </div>
-      </section>
+          <!-- Secondary CTA -->
+          <tr><td style="padding:0 16px 24px 16px" align="left">
+            <a class="btn" href="https://wa.me/905358699178?text=Send%20me%20the%20rental%20guarantee%20contract" target="_blank">Request Legal Terms</a>
+          </td></tr>
 
-      <!-- LOCATION -->
-      <section id="location" class="grid-2">
-        <div class="card">
-          <h2 class="section-title">Prime Antalya Location</h2>
-          <p>Located in Güzelyurt, Aksu — an area with strong year-round rental demand. Coordinates:</p>
-          <div class="btn-row" style="gap:8px;flex-wrap:wrap">
-            <a class="btn primary" target="_blank" href="https://www.google.com/maps/place/36%C2%B055'01.1%22N+30%C2%B049'25.7%22E">Open in Google Maps</a>
-            <span class="btn" style="font-variant-numeric:tabular-nums">36°55'01.1&quot;N 30°49'25.7&quot;E</span>
-          </div>
-        </div>
-        <div class="card">
-          <iframe class="map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=36%C2%B055'01.1%22N%2030%C2%B049'25.7%22E&z=15&output=embed" title="Sunset Garden Map"></iframe>
-        </div>
-      </section>
-    </main>
-[googlereviewspro id="1"]
-
-  <!-- Slider Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function(){
-      // Footer year
-      var y = document.getElementById('y'); if(y) y.textContent = new Date().getFullYear();
-
-      // Init all sliders under #sunset-landing
-      document.querySelectorAll('#sunset-landing .js-sunset-slider').forEach(function(slider){
-        var track = slider.querySelector('.js-track');
-        var prev  = slider.querySelector('.js-prev');
-        var next  = slider.querySelector('.js-next');
-        var dots  = slider.querySelector('.js-dots');
-        if(!track || !dots || !prev || !next) return;
-
-        var total = track.children.length;
-        var index = 0;
-        var interval = parseInt(slider.getAttribute('data-autoplay') || '6500', 10);
-        var timer;
-
-        function update(){
-          track.style.transform = 'translateX(-' + (index*100) + '%)';
-          Array.prototype.forEach.call(dots.children, function(d, i){
-            d.classList.toggle('active', i === index);
-          });
-        }
-
-        // Build dots
-        for(var i=0;i<total;i++){
-          var dot = document.createElement('button');
-          dot.type = 'button';
-          dot.className = 'dot';
-          (function(i){ dot.addEventListener('click', function(){ index = i; update(); }); })(i);
-          dots.appendChild(dot);
-        }
-        update();
-
-        // Arrows
-        prev.addEventListener('click', function(){ index = (index - 1 + total) % total; update(); });
-        next.addEventListener('click', function(){ index = (index + 1) % total; update(); });
-
-        // Autoplay with pause on hover/visibility
-        function start(){ stop(); timer = setInterval(function(){ index = (index + 1) % total; update(); }, interval); }
-        function stop(){ if(timer) clearInterval(timer); }
-        start();
-
-        slider.addEventListener('mouseenter', stop);
-        slider.addEventListener('mouseleave', start);
-        document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
-
-        // Defensive: if some global CSS breaks flex, we force it
-        track.style.display = 'flex';
-        Array.prototype.forEach.call(track.children, function(el){ el.style.minWidth = '100%'; });
-      });
-    });
-  </script>
+          <!-- Footer -->
+          <tr><td class="hr"></td></tr>
+          <tr><td style="padding:14px" align="center">
+            <p class="p" style="font-size:12px;color:#64748b">© <span id="y">2025</span> TIMONDRO • Antalya</p>
+          </td></tr>
+        </table>
+      </td></tr>
+    </table>
+  </center>
 </body>
 </html>
